@@ -138,7 +138,7 @@ namespace minAge
             // 
             this.findMin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.findMin.Location = new System.Drawing.Point(121, 371);
+            this.findMin.Location = new System.Drawing.Point(104, 371);
             this.findMin.Name = "findMin";
             this.findMin.Size = new System.Drawing.Size(176, 23);
             this.findMin.TabIndex = 7;

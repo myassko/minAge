@@ -12,6 +12,7 @@ namespace minAge
 {
     public partial class MinAge : Form
     {
+        List<DateTime> PeapleBirthday=new List<DateTime>();
         public MinAge()
         {
             InitializeComponent();
@@ -29,12 +30,27 @@ namespace minAge
             string fio = FullNameTb.Text;
             string birth = BirthdayDTP.Value.ToShortDateString();
             peopleTable.Rows.Add(fio, birth);
+
+            PeapleBirthday.Add(BirthdayDTP.Value);
+
         }
 
         private void findMin_Click(object sender, EventArgs e)
         {
-           // var a = peopleTable.SelectedColumns[1];
+            DateTime minDate=DateTime.MaxValue;
+            int index = 0;
+            for (int i = 0; i < PeapleBirthday.Count; i++)
+            {
+                DateTime date = PeapleBirthday[i];
+                if (date < minDate)
+                {
+                    index = i;
+                    minDate = date;
 
+                }
+
+            }
+            MessageBox.Show(peopleTable[0,index].Value.ToString());
         }
     }
 }
