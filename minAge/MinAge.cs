@@ -12,45 +12,73 @@ namespace minAge
 {
     public partial class MinAge : Form
     {
-        List<DateTime> PeapleBirthday=new List<DateTime>();
+        List<Person> people = new List<Person>();
         public MinAge()
         {
             InitializeComponent();
-            StartPosition=FormStartPosition.CenterScreen;
+            StartPosition = FormStartPosition.CenterScreen;
+        }
+
+        public void Clear()
+        {
+            FullNameTb.Text = "";
+            BirthdayDTP.Value = DateTime.Today;
         }
 
         private void clear_Click(object sender, EventArgs e)
         {
-            FullNameTb.Text = "";
-            BirthdayDTP.Value = DateTime.Today;
+            Clear();
         }
 
         private void Add_Click(object sender, EventArgs e)
         {
             string fio = FullNameTb.Text;
             string birth = BirthdayDTP.Value.ToShortDateString();
+            string[] datePersonSplit = birth.Split('.');
+            if (string.IsNullOrEmpty(fio))
+            {
+                MessageBox.Show("Вы некорректно вписали ФИО");
+                return;
+            }
             peopleTable.Rows.Add(fio, birth);
 
-            PeapleBirthday.Add(BirthdayDTP.Value);
+
+
+
+
+            DateOfBirth datePerson = new DateOfBirth(int.Parse(datePersonSplit[0]), int.Parse(datePersonSplit[1]),
+                int.Parse(datePersonSplit[2]));
+            Person person = new Person(fio, datePerson);
+
+            people.Add(person);
+
+
+            Clear();
+
+
 
         }
 
         private void findMin_Click(object sender, EventArgs e)
         {
-            DateTime minDate=DateTime.MaxValue;
-            int index = 0;
-            for (int i = 0; i < PeapleBirthday.Count; i++)
+            DateOfBirth minDate = DateOfBirth.MinBirth;
+            Person ans = new Person();
+            for (int i = 0; i < people.Count; i++)
             {
-                DateTime date = PeapleBirthday[i];
-                if (date < minDate)
-                {
-                    index = i;
-                    minDate = date;
+                Person man = people[i];
+                DateOfBirth date = man.BirthDate;
+                var a = DateOfBirth.CompareDate(minDate, date);
 
+                if (a == 1)
+                {
+                    ans = man;
+                    minDate = man.BirthDate;
                 }
 
+
             }
-            MessageBox.Show(peopleTable[0,index].Value.ToString());
+
+            MessageBox.Show(ans.ToString());
         }
     }
 }
